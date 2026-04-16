@@ -34,9 +34,7 @@ jobs:
           git config user.email "actions@github.com"
 
       - name: Fetch all branches
-        run: |
-          git fetch origin main:main
-          git fetch origin github:github
+        run: git fetch --all
 
       - name: Check for differences
         id: check
@@ -52,10 +50,10 @@ jobs:
       - name: Merge github into main
         if: steps.check.outputs.no_changes == 'false'
         run: |
-          git checkout main
+          git checkout -B main origin/main
 
           if [ "${{ github.event.inputs.merge_method }}" == "squash" ]; then
-            git merge --squash github
+            git merge --squash origin/github
             git commit -m "Promote development to production
 
             ${{ github.event.inputs.reason }}
@@ -64,7 +62,7 @@ jobs:
             Promoted by: ${{ github.actor }}
             Workflow: ${{ github.run_id }}"
           else
-            git merge github --no-ff -m "Merge github into main
+            git merge origin/github --no-ff -m "Merge github into main
 
             ${{ github.event.inputs.reason }}
 
@@ -82,7 +80,7 @@ jobs:
       - name: No changes to promote
         if: steps.check.outputs.no_changes == 'true'
         run: |
-          echo "ℹgithub and main branches are already in sync"
+          echo "github and main branches are already in sync"
           echo "No promotion needed"
           exit 0
 
@@ -102,4 +100,4 @@ jobs:
           echo "**Next Steps:**" >> $GITHUB_STEP_SUMMARY
           echo "1. Production deployment starting automatically" >> $GITHUB_STEP_SUMMARY
           echo "2. Check [Netlify](https://app.netlify.com) for deploy status" >> $GITHUB_STEP_SUMMARY
-          echo "3. erify at [krownproperties.co.nz](https://krownproperties.co.nz)" >> $GITHUB_STEP_SUMMARY
+          echo "3. Verify at [krownproperties.co.nz](https://krownproperties.co.nz)" >> $GITHUB_STEP_SUMMARY

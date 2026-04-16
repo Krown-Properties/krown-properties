@@ -1,0 +1,105 @@
+name: Promote Development to Production
+
+on:
+  # Manual trigger from GitHub UI
+  workflow_dispatch:
+    inputs:
+      merge_method:
+        description: 'Merge method'
+        required: true
+        default: 'merge'
+        type: choice
+        options:
+          - merge
+          - squash
+      reason:
+        description: 'Reason for promotion'
+        required: false
+        default: 'Promoting tested changes to production'
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout github branch
+        uses: actions/checkout@v4
+        with:
+          ref: github
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Fetch all branches
+        run: |
+          git fetch origin main:main
+          git fetch origin github:github
+
+      - name: Check for differences
+        id: check
+        run: |
+          if git diff --quiet origin/main origin/github; then
+            echo "no_changes=true" >> $GITHUB_OUTPUT
+            echo "No changes to promote - github and main are identical"
+          else
+            echo "no_changes=false" >> $GITHUB_OUTPUT
+            echo "Changes detected - ready to merge"
+          fi
+
+      - name: Merge github into main
+        if: steps.check.outputs.no_changes == 'false'
+        run: |
+          git checkout main
+
+          if [ "${{ github.event.inputs.merge_method }}" == "squash" ]; then
+            git merge --squash github
+            git commit -m "Promote development to production
+
+            ${{ github.event.inputs.reason }}
+
+            Squashed commits from github branch
+            Promoted by: ${{ github.actor }}
+            Workflow: ${{ github.run_id }}"
+          else
+            git merge github --no-ff -m "Merge github into main
+
+            ${{ github.event.inputs.reason }}
+
+            Promoted by: ${{ github.actor }}
+            Workflow: ${{ github.run_id }}"
+          fi
+
+      - name: Push to main
+        if: steps.check.outputs.no_changes == 'false'
+        run: |
+          git push origin main
+          echo "Successfully promoted github → main"
+          echo "Production deployment will start automatically"
+
+      - name: No changes to promote
+        if: steps.check.outputs.no_changes == 'true'
+        run: |
+          echo "ℹgithub and main branches are already in sync"
+          echo "No promotion needed"
+          exit 0
+
+      - name: Summary
+        if: steps.check.outputs.no_changes == 'false'
+        run: |
+          echo "## Promotion Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Development changes merged to production" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Details:**" >> $GITHUB_STEP_SUMMARY
+          echo "- From: \`github\` branch" >> $GITHUB_STEP_SUMMARY
+          echo "- To: \`main\` branch" >> $GITHUB_STEP_SUMMARY
+          echo "- Method: \`${{ github.event.inputs.merge_method }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Promoted by: @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Next Steps:**" >> $GITHUB_STEP_SUMMARY
+          echo "1. Production deployment starting automatically" >> $GITHUB_STEP_SUMMARY
+          echo "2. Check [Netlify](https://app.netlify.com) for deploy status" >> $GITHUB_STEP_SUMMARY
+          echo "3. erify at [krownproperties.co.nz](https://krownproperties.co.nz)" >> $GITHUB_STEP_SUMMARY

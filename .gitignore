@@ -13,6 +13,9 @@ build/
 .env
 .env.local
 .env.*.local
+CREDENTIALS_TEMPLATE.txt
+**/credentials*.txt
+**/secrets*.txt
 
 # OS files
 .DS_Store

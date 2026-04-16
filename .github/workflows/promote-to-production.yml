@@ -1,0 +1,67 @@
+name: Promote Development to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      merge_method:
+        description: 'Merge method'
+        required: true
+        default: 'merge'
+        type: choice
+        options:
+          - merge
+          - squash
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout github branch
+        uses: actions/checkout@v4
+        with:
+          ref: github
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Fetch all branches
+        run: git fetch origin main github
+
+      - name: Check for differences
+        id: check
+        run: |
+          if git diff --quiet origin/main origin/github; then
+            echo "no_changes=true" >> $GITHUB_OUTPUT
+            echo "No changes to promote"
+          else
+            echo "no_changes=false" >> $GITHUB_OUTPUT
+            echo "Changes detected"
+          fi
+
+      - name: Merge github into main
+        if: steps.check.outputs.no_changes == 'false'
+        run: |
+          git checkout -B main origin/main
+
+          if [ "${{ github.event.inputs.merge_method }}" == "squash" ]; then
+            git merge --squash origin/github
+            git commit -m "Promote github to main"
+          else
+            git merge origin/github --no-ff -m "Merge github into main"
+          fi
+
+      - name: Push to main
+        if: steps.check.outputs.no_changes == 'false'
+        run: |
+          git push origin main
+
+      - name: No changes
+        if: steps.check.outputs.no_changes == 'true'
+        run: echo "Branches are already in sync"

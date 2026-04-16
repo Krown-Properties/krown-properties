@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Current Projects — Krown Properties</title>
+  <meta name="description" content="Explore Krown Properties' current residential development portfolio across Auckland — from boutique townhouses to large-scale communities." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://krownproperties.co.nz/currentProjects.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- Header and Nav injected by components.js -->
+<div id="kp-header"></div>
+
+<!-- CURRENT PROJECTS PAGE WRAPPER -->
+<div id="current-projects-page">
+
+  <!-- Hero -->
+  <section class="cp-hero" id="cpHero" aria-label="Current projects hero">
+    <div class="cp-hero-bg" role="img" aria-label="Krown Properties residential development"></div>
+    <div class="cp-hero-overlay"></div>
+    <div class="cp-hero-content">
+      <p class="cp-hero-label">Our Portfolio</p>
+      <h1 class="cp-hero-title">Current<br>Projects</h1>
+    </div>
+  </section>
+
+  <!-- Projects List — rendered dynamically from PROJECTS data -->
+  <main id="cpProjectsList" aria-label="Current development projects"></main>
+
+  <!-- Newsletter -->
+  <div class="cp-newsletter">
+    <p class="cp-newsletter-label">Stay Informed</p>
+    <h2 class="cp-newsletter-title">Receive Project Updates</h2>
+    <p class="cp-newsletter-sub">Sign up to receive updates on new developments, releases, and investment opportunities.</p>
+    <form class="cp-form" onsubmit="return false;" aria-label="Newsletter sign-up">
+      <input type="email" placeholder="Your email address" aria-label="Email address" />
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <div id="kp-footer"></div>
+
+</div><!-- #current-projects-page -->
+
+<script src="js/components.js"></script>
+<script src="js/projects-data.js"></script>
+<script>
+  // Render project cards from PROJECTS data
+  (function renderProjects() {
+    var container = document.getElementById('cpProjectsList');
+    if (!container || typeof PROJECTS === 'undefined') return;
+    container.innerHTML = Object.entries(PROJECTS).map(function (entry, i) {
+      var key = entry[0], p = entry[1];
+      var reverse = i % 2 !== 0 ? ' reverse' : '';
+      var imgSrc = (p.images && p.images[0]) ? p.images[0] : p.cardImage;
+      return '<div class="project-item' + reverse + ' cp-reveal">' +
+        '<div class="project-img-wrap">' +
+          '<img src="' + imgSrc + '" alt="' + p.name + '" loading="lazy" />' +
+        '</div>' +
+        '<div class="project-text-wrap">' +
+          '<p class="project-category">Current Projects</p>' +
+          '<h2 class="project-name">' + p.name + '</h2>' +
+          '<span class="project-status ' + p.statusClass + '">' + p.statusLabel + '</span>' +
+          '<p class="project-desc">' + p.cardDesc + '</p>' +
+          '<a href="project?id=' + key + '" class="project-link">Learn More</a>' +
+        '</div>' +
+      '</div>';
+    }).join('\n');
+  })();
+</script>
+<script src="js/script.js"></script>
+<script>
+  // Activate this page and trigger hero animation
+  (function() {
+    var wrapper = document.getElementById('current-projects-page');
+    if (!wrapper) return;
+    wrapper.style.display = 'block';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        wrapper.classList.add('page-active');
+        setTimeout(function() {
+          var hero = document.getElementById('cpHero');
+          if (hero) hero.classList.add('loaded');
+        }, 100);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Title and description are set dynamically by JS based on project data -->
+  <title>Project — Krown Properties</title>
+  <meta name="description" content="Explore this Krown Properties residential development in Auckland." />
+  <meta name="robots" content="index, follow" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- Header and Nav injected by components.js -->
+<div id="kp-header"></div>
+
+<!-- PROJECT DETAIL PAGE WRAPPER -->
+<div id="project-detail-page">
+
+  <!-- Hero -->
+  <section class="pd-hero" id="pdHero" aria-label="Project hero">
+    <div class="pd-hero-bg" id="pdHeroBg"></div>
+    <div class="pd-hero-overlay"></div>
+    <div class="pd-hero-content">
+      <p class="pd-hero-label" id="pdHeroLabel"></p>
+      <h1 class="pd-hero-title" id="pdHeroTitle"></h1>
+      <p class="pd-hero-location" id="pdHeroLocation"></p>
+      <div class="pd-hero-row">
+        <span class="project-status" id="pdHeroStatus"></span>
+        <a href="#pd-enquire" class="cp-hero-btn" id="pdEnquireBtn">Enquire Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Overview -->
+  <div class="pd-overview">
+    <div class="pd-overview-inner">
+      <div class="pd-overview-text">
+        <p class="section-label pd-reveal">Project Overview</p>
+        <h2 class="section-title pd-reveal d1" id="pdOverviewTitle"></h2>
+        <div class="section-body pd-reveal d2" id="pdOverviewBody"></div>
+      </div>
+      <div class="pd-overview-aside pd-reveal d2" id="pdSpecGrid"></div>
+    </div>
+  </div>
+
+  <!-- Highlights -->
+  <div class="pd-highlights">
+    <div class="pd-highlights-grid" id="pdHighlights"></div>
+  </div>
+
+  <!-- Gallery -->
+  <div class="pd-gallery" aria-label="Project gallery">
+    <span class="pd-gallery-label">Gallery</span>
+    <div class="pd-gallery-swiper-wrap">
+      <div class="swiper pd-gallery-swiper" id="pdGallery">
+        <div class="swiper-wrapper" id="pdGalleryWrapper"></div>
+      </div>
+      <div class="pd-gallery-prev" aria-label="Previous image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <div class="pd-gallery-next" aria-label="Next image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enquire -->
+  <div class="pd-enquire" id="pd-enquire">
+    <div class="pd-enquire-inner">
+      <div class="pd-enquire-text pd-reveal">
+        <p class="section-label">Get In Touch</p>
+        <h2 class="pd-enquire-title" id="pdEnquireTitle"></h2>
+        <p class="pd-enquire-body" id="pdEnquireBody"></p>
+        <div class="pd-enquire-contact">
+          <a href="mailto:krownproperties@krown.co.nz">krownproperties@krown.co.nz</a>
+          <a href="tel:+64276654333">+64 276654333</a>
+        </div>
+      </div>
+      <div class="pd-form pd-reveal d2">
+        <p class="pd-form-title" id="pdFormTitle">Enquire Now</p>
+        <form onsubmit="return false;" aria-label="Project enquiry form">
+          <div class="pd-form-row">
+            <div class="pd-form-group">
+              <label for="pd-fname">First Name</label>
+              <input type="text" id="pd-fname" placeholder="Jane" autocomplete="given-name" />
+            </div>
+            <div class="pd-form-group">
+              <label for="pd-lname">Last Name</label>
+              <input type="text" id="pd-lname" placeholder="Smith" autocomplete="family-name" />
+            </div>
+          </div>
+          <div class="pd-form-group">
+            <label for="pd-email">Email Address</label>
+            <input type="email" id="pd-email" placeholder="jane@email.com" autocomplete="email" />
+          </div>
+          <div class="pd-form-group">
+            <label for="pd-phone">Phone Number</label>
+            <input type="tel" id="pd-phone" placeholder="+64 21 000 000" autocomplete="tel" />
+          </div>
+          <div class="pd-form-group">
+            <label for="pd-type">I am a</label>
+            <select id="pd-type">
+              <option value="">Select&hellip;</option>
+              <option>First Home Buyer</option>
+              <option>Home Buyer</option>
+              <option>Investor</option>
+            </select>
+          </div>
+          <div class="pd-form-group">
+            <label for="pd-message">Message (optional)</label>
+            <textarea id="pd-message" placeholder="Tell us about your requirements&hellip;"></textarea>
+          </div>
+          <button type="submit" class="pd-form-submit">Submit Enquiry</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="kp-footer"></div>
+
+</div><!-- #project-detail-page -->
+
+<script src="js/components.js"></script>
+<script src="js/projects-data.js"></script>
+<script>
+  // ─── Read project ID from URL query string ───
+  (function () {
+    var params  = new URLSearchParams(window.location.search);
+    var projId  = params.get('id');
+
+    if (!projId || typeof PROJECTS === 'undefined' || !PROJECTS[projId]) {
+      // Unknown project — redirect to projects listing
+      window.location.replace('currentProjects');
+      return;
+    }
+
+    var p = PROJECTS[projId];
+
+    // Show wrapper immediately so the page is never stuck blank
+    var wrapper = document.getElementById('project-detail-page');
+    wrapper.style.display = 'block';
+
+    // Update page <title> and meta description
+    document.title = p.name + ' — Krown Properties';
+    var descMeta = document.querySelector('meta[name="description"]');
+    if (descMeta) descMeta.setAttribute('content', p.cardDesc);
+
+    // ─── Populate hero ───
+    document.getElementById('pdHeroBg').style.backgroundImage =
+      'url(\'' + ((p.images && p.images[0]) ? p.images[0] : p.heroImage) + '\')';
+    document.getElementById('pdHeroLabel').textContent    = p.category;
+    document.getElementById('pdHeroTitle').textContent    = p.name;
+    document.getElementById('pdHeroLocation').textContent = p.location;
+    var statusEl = document.getElementById('pdHeroStatus');
+    statusEl.textContent = p.statusLabel;
+    statusEl.className   = 'project-status ' + p.statusClass;
+
+    // ─── Overview ───
+    document.getElementById('pdOverviewTitle').textContent = p.overviewTitle;
+    document.getElementById('pdOverviewBody').innerHTML    = p.overviewBody;
+
+    // ─── Specs ───
+    document.getElementById('pdSpecGrid').innerHTML = p.specs.map(function (s) {
+      return '<div class="pd-spec-item">' +
+        '<p class="pd-spec-label">' + s.label + '</p>' +
+        '<p class="pd-spec-value">' + s.value  + '</p>' +
+      '</div>';
+    }).join('');
+
+    // ─── Highlights ───
+    document.getElementById('pdHighlights').innerHTML = p.highlights.map(function (h, i) {
+      return '<div class="pd-highlight-card pd-reveal" style="transition-delay:' + (i * 0.12) + 's">' +
+        '<p class="pd-highlight-num">0' + (i + 1) + '</p>' +
+        '<p class="pd-highlight-title">' + h.title + '</p>' +
+        '<p class="pd-highlight-body">'  + h.body  + '</p>' +
+      '</div>';
+    }).join('');
+
+    // ─── Enquire section ───
+    document.getElementById('pdEnquireTitle').textContent = p.enquireTitle;
+    document.getElementById('pdEnquireBody').textContent  = p.enquireBody;
+    document.getElementById('pdFormTitle').textContent    =
+      p.statusLabel === 'Completed' ? 'Get In Touch' : 'Enquire Now';
+
+    // ─── Gallery (populated before Swiper init) ───
+    var galleryImgs = (p.images && p.images.length) ? p.images : (p.gallery || []);
+    document.getElementById('pdGalleryWrapper').innerHTML = galleryImgs.map(function (src) {
+      return '<div class="swiper-slide"><img src="' + src + '" loading="lazy" alt="' + p.name + '" /></div>';
+    }).join('');
+
+    // ─── Trigger entrance animations ───
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        wrapper.classList.add('page-active');
+      });
+    });
+
+    // ─── Init Swiper after DOM is ready ───
+    window.addEventListener('load', function () {
+      if (typeof Swiper !== 'undefined') {
+        new Swiper('#pdGallery', {
+          loop: galleryImgs.length > 1,
+          speed: 700,
+          navigation: {
+            prevEl: '.pd-gallery-prev',
+            nextEl: '.pd-gallery-next'
+          }
+        });
+      }
+    });
+
+  })();
+</script>
+<script src="js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</body>
+</html>

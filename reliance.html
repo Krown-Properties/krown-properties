@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reliance Projects — Krown Properties</title>
+  <meta name="description" content="Reliance Projects by Krown Properties provides end-to-end residential development expertise across Auckland — from site acquisition and design through to construction and handover." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://krownproperties.co.nz/reliance.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- Header and Nav injected by components.js -->
+<div id="kp-header"></div>
+
+<!-- RELIANCE PROJECTS PAGE WRAPPER -->
+<div id="reliance-page">
+
+  <section class="rp-hero" id="rpHero" aria-label="Reliance Projects hero">
+    <div class="rp-hero-bg" role="img" aria-label="Reliance Projects construction"></div>
+    <div class="rp-hero-overlay"></div>
+    <div class="rp-hero-content">
+      <p class="rp-hero-label">Krown Properties</p>
+      <h1 class="rp-hero-title">Reliance<br>Projects</h1>
+      <p class="rp-hero-sub">End-to-End Development Expertise</p>
+    </div>
+  </section>
+
+  <section class="rp-intro" aria-label="Who we are">
+    <div class="rp-intro-inner">
+      <span class="rp-intro-label">Who We Are</span>
+      <h2 class="rp-intro-title">End-to-End Development Expertise<br>by Reliance Projects</h2>
+      <p class="rp-intro-body">From raw land to finished homes, Reliance Projects by Krown Properties manages the complete development project lifecycle. Our integrated approach means single-point accountability, seamless execution, and quality outcomes across every discipline.</p>
+    </div>
+  </section>
+
+  <section class="rp-services" aria-label="Reliance Projects services">
+    <div class="rp-services-header">
+      <span class="rp-services-label">What We Do</span>
+      <h2 class="rp-services-title">Our Services</h2>
+    </div>
+    <div class="rp-services-grid">
+      <div class="rp-service-card">
+        <p class="rp-service-num">01</p>
+        <h3 class="rp-service-name">Property Development</h3>
+        <p class="rp-service-desc">We identify, acquire, and develop high-potential sites across Auckland, transforming land into premium residential communities that deliver strong returns.</p>
+        <ul class="rp-service-list">
+          <li>Site acquisition &amp; due diligence</li>
+          <li>Feasibility analysis</li>
+          <li>Resource consent management</li>
+          <li>Multi-dwelling development</li>
+        </ul>
+      </div>
+      <div class="rp-service-card">
+        <p class="rp-service-num">02</p>
+        <h3 class="rp-service-name">Construction</h3>
+        <p class="rp-service-desc">Our in-house construction team delivers precision builds on time and on budget &mdash; licensed builders and trade specialists committed to the highest standards.</p>
+        <ul class="rp-service-list">
+          <li>Licensed building practitioners</li>
+          <li>Structural &amp; civil works</li>
+          <li>Quality assurance programmes</li>
+          <li>Health &amp; safety compliance</li>
+        </ul>
+      </div>
+      <div class="rp-service-card">
+        <p class="rp-service-num">03</p>
+        <h3 class="rp-service-name">Project Management</h3>
+        <p class="rp-service-desc">Experienced project managers coordinate every stakeholder from council to contractors, keeping projects on programme and within budget at every stage.</p>
+        <ul class="rp-service-list">
+          <li>Programme scheduling</li>
+          <li>Cost management</li>
+          <li>Contractor procurement</li>
+          <li>Council coordination</li>
+        </ul>
+      </div>
+      <div class="rp-service-card">
+        <p class="rp-service-num">04</p>
+        <h3 class="rp-service-name">Turnkey Solutions</h3>
+        <p class="rp-service-desc">From concept to key handover, our turnkey packages handle everything &mdash; design, consent, construction, landscaping, and final inspections &mdash; completely hassle-free.</p>
+        <ul class="rp-service-list">
+          <li>Design &amp; architectural services</li>
+          <li>Landscaping &amp; exterior</li>
+          <li>Interior finishing packages</li>
+          <li>CCC &amp; title management</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="rp-cta" aria-label="Get in touch">
+    <span class="rp-cta-label">Get In Touch</span>
+    <h2 class="rp-cta-title">Ready to Start<br>Your Next Project?</h2>
+    <p class="rp-cta-body">Contact the Reliance Projects team to discuss your development, construction, or project management needs.</p>
+    <a href="mailto:relianceprojects@krown.co.nz" class="btn">relianceprojects@krown.co.nz</a>
+  </section>
+
+  <!-- Footer -->
+  <div id="kp-footer"></div>
+
+</div><!-- #reliance-page -->
+
+<script src="js/components.js"></script>
+<script src="js/script.js"></script>
+<script>
+  // Activate this page and trigger hero animation
+  (function() {
+    var wrapper = document.getElementById('reliance-page');
+    if (!wrapper) return;
+    wrapper.style.display = 'block';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        wrapper.classList.add('page-active');
+        setTimeout(function() {
+          var hero = document.getElementById('rpHero');
+          if (hero) hero.classList.add('loaded');
+        }, 100);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Development Process — Krown Properties</title>
+  <meta name="description" content="Discover how Krown Properties takes every project from raw land to completed homes — a disciplined five-phase development process covering acquisition, design, consent, construction, and completion." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://krownproperties.co.nz/process.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- Header and Nav injected by components.js -->
+<div id="kp-header"></div>
+
+<!-- PROCESS PAGE WRAPPER -->
+<div id="process-page">
+
+  <section class="proc-hero" id="procHero" aria-label="Development process hero">
+    <div class="proc-hero-bg" role="img" aria-label="Krown Properties development process"></div>
+    <div class="proc-hero-overlay"></div>
+    <div class="proc-hero-content">
+      <p class="proc-hero-label">How We Work</p>
+      <h1 class="proc-hero-title">Our Development<br>Process</h1>
+    </div>
+  </section>
+
+  <section class="proc-intro" aria-label="Our approach">
+    <div class="proc-intro-inner">
+      <span class="proc-intro-label">Our Approach</span>
+      <h2 class="proc-intro-title">A disciplined, end-to-end process that takes every project from raw land to completed homes &mdash; on time, on budget, and to the highest standard.</h2>
+    </div>
+  </section>
+
+  <div class="proc-phases" aria-label="Development phases">
+
+    <div class="proc-phase">
+      <div class="proc-phase-img">
+        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=80" alt="Site acquisition phase" loading="lazy" />
+      </div>
+      <div class="proc-phase-body">
+        <p class="proc-phase-num">01</p>
+        <p class="proc-phase-tag">Phase One</p>
+        <h2 class="proc-phase-name">Acquisition</h2>
+        <p class="proc-phase-desc">We source and evaluate sites through rigorous due diligence &mdash; assessing planning potential, market demand, and financial feasibility before committing capital.</p>
+      </div>
+    </div>
+
+    <div class="proc-phase reverse">
+      <div class="proc-phase-img">
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80" alt="Architectural design phase" loading="lazy" />
+      </div>
+      <div class="proc-phase-body">
+        <p class="proc-phase-num">02</p>
+        <p class="proc-phase-tag">Phase Two</p>
+        <h2 class="proc-phase-name">Design</h2>
+        <p class="proc-phase-desc">Our architects and designers create schemes that maximise yield, comply with the NPS-UD, and deliver homes buyers genuinely want to live in.</p>
+      </div>
+    </div>
+
+    <div class="proc-phase">
+      <div class="proc-phase-img">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80" alt="Resource consent phase" loading="lazy" />
+      </div>
+      <div class="proc-phase-body">
+        <p class="proc-phase-num">03</p>
+        <p class="proc-phase-tag">Phase Three</p>
+        <h2 class="proc-phase-name">Consent</h2>
+        <p class="proc-phase-desc">We manage the full resource and building consent process with Auckland Council, minimising delays and ensuring every project is approved to the highest regulatory standard before breaking ground.</p>
+      </div>
+    </div>
+
+    <div class="proc-phase reverse">
+      <div class="proc-phase-img">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80" alt="Construction phase" loading="lazy" />
+      </div>
+      <div class="proc-phase-body">
+        <p class="proc-phase-num">04</p>
+        <p class="proc-phase-tag">Phase Four</p>
+        <h2 class="proc-phase-name">Construction</h2>
+        <p class="proc-phase-desc">Our in-house build team executes the approved scheme with weekly reporting, quality inspections, and zero-compromise workmanship standards.</p>
+      </div>
+    </div>
+
+    <div class="proc-phase">
+      <div class="proc-phase-img">
+        <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1200&q=80" alt="Completion and handover phase" loading="lazy" />
+      </div>
+      <div class="proc-phase-body">
+        <p class="proc-phase-num">05</p>
+        <p class="proc-phase-tag">Phase Five</p>
+        <h2 class="proc-phase-name">Completion</h2>
+        <p class="proc-phase-desc">CCC obtained, titles issued, and a seamless handover. Our relationship continues post-settlement with a comprehensive maintenance warranty.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <section class="proc-cta" aria-label="Start the conversation">
+    <span class="proc-cta-label">Start the Conversation</span>
+    <h2 class="proc-cta-title">Ready to Develop<br>Your Next Site?</h2>
+    <p class="proc-cta-body">Talk to the Krown Properties team about how our development process can work for your project.</p>
+    <a href="mailto:krownproperties@krown.co.nz" class="btn">Get In Touch</a>
+  </section>
+
+  <!-- Footer -->
+  <div id="kp-footer"></div>
+
+</div><!-- #process-page -->
+
+<script src="js/components.js"></script>
+<script src="js/script.js"></script>
+<script>
+  // Activate this page and trigger hero animation
+  (function() {
+    var wrapper = document.getElementById('process-page');
+    if (!wrapper) return;
+    wrapper.style.display = 'block';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        wrapper.classList.add('page-active');
+        setTimeout(function() {
+          var hero = document.getElementById('procHero');
+          if (hero) hero.classList.add('loaded');
+        }, 100);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

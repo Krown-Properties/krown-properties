@@ -1,4 +1,4 @@
-name: Deploy to Development (Netlify)
+name: Deploy to Development
 
 on:
   # Auto-deploy when code is pushed to dev

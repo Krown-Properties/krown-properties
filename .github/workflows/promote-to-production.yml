@@ -1,13 +1,12 @@
 name: Promote Development to Production
 
 on:
-  # Manual trigger from GitHub UI
   workflow_dispatch:
     inputs:
       merge_method:
         description: 'Merge method'
         required: true
-        default: 'merge'
+        default: 'squash'
         type: choice
         options:
           - merge
@@ -17,87 +16,62 @@ on:
         required: false
         default: 'Promoting tested changes to production'
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   promote:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout github branch
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: github
           fetch-depth: 0
+
+      - name: Install GitHub CLI
+        run: sudo apt-get update && sudo apt-get install gh -y
 
       - name: Configure Git
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
 
-      - name: Fetch all branches
-        run: git fetch --all
+      - name: Fetch branches
+        run: git fetch origin main github
 
       - name: Check for differences
         id: check
         run: |
           if git diff --quiet origin/main origin/github; then
             echo "no_changes=true" >> $GITHUB_OUTPUT
-            echo "No changes to promote - github and main are identical"
+            echo "No changes to promote"
           else
             echo "no_changes=false" >> $GITHUB_OUTPUT
-            echo "Changes detected - ready to merge"
+            echo "Changes detected"
           fi
 
-      - name: Merge github into main
+      - name: Create Pull Request
         if: steps.check.outputs.no_changes == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git checkout -B main origin/main
+          gh pr create \
+            --base main \
+            --head github \
+            --title "Promote github to main" \
+            --body "${{ github.event.inputs.reason }}"
 
-          if [ "${{ github.event.inputs.merge_method }}" == "squash" ]; then
-            git merge --squash origin/github
-            git commit -m "Promote development to production
-
-            ${{ github.event.inputs.reason }}
-
-            Squashed commits from github branch
-            Promoted by: ${{ github.actor }}
-            Workflow: ${{ github.run_id }}"
-          else
-            git merge origin/github --no-ff -m "Merge github into main
-
-            ${{ github.event.inputs.reason }}
-
-            Promoted by: ${{ github.actor }}
-            Workflow: ${{ github.run_id }}"
-          fi
-
-      - name: Push to main
+      - name: Merge Pull Request
         if: steps.check.outputs.no_changes == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git push origin main
-          echo "Successfully promoted github → main"
-          echo "Production deployment will start automatically"
+          gh pr merge github \
+            --${{ github.event.inputs.merge_method }} \
+            --delete-branch=false
 
-      - name: No changes to promote
+      - name: No changes
         if: steps.check.outputs.no_changes == 'true'
-        run: |
-          echo "github and main branches are already in sync"
-          echo "No promotion needed"
-          exit 0
-
-      - name: Summary
-        if: steps.check.outputs.no_changes == 'false'
-        run: |
-          echo "## Promotion Complete!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Development changes merged to production" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Details:**" >> $GITHUB_STEP_SUMMARY
-          echo "- From: \`github\` branch" >> $GITHUB_STEP_SUMMARY
-          echo "- To: \`main\` branch" >> $GITHUB_STEP_SUMMARY
-          echo "- Method: \`${{ github.event.inputs.merge_method }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- Promoted by: @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Next Steps:**" >> $GITHUB_STEP_SUMMARY
-          echo "1. Production deployment starting automatically" >> $GITHUB_STEP_SUMMARY
-          echo "2. Check [Netlify](https://app.netlify.com) for deploy status" >> $GITHUB_STEP_SUMMARY
-          echo "3. Verify at [krownproperties.co.nz](https://krownproperties.co.nz)" >> $GITHUB_STEP_SUMMARY
+        run: echo "Branches are already in sync"

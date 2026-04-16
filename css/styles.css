@@ -97,8 +97,8 @@
   }
   .nav-logo span { font-weight: 300; }
   .nav-close {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: 1px solid rgba(255,255,255,.3);
     background: none;
@@ -313,6 +313,9 @@
     .img-col-2 img { height: 200px; }
   }
 
+  @media (max-width: 1024px) { .developments { padding: 80px 40px; } }
+  @media (max-width: 640px)  { .developments { padding: 60px 24px; } }
+
   /* ──── ABOUT STATS ──── */
   .about-stats {
     background: var(--grey-bg);
@@ -327,7 +330,7 @@
     gap: 60px;
   }
   @media (max-width: 900px) {
-    .about-inner { flex-direction: column; align-items: flex-start; gap: 48px; }
+    .about-inner { flex-direction: column; align-items: flex-start; gap: 40px; }
   }
   .about-heading {
     font-family: 'Montserrat', sans-serif;
@@ -340,7 +343,10 @@
     flex: 0 0 220px;
     white-space: nowrap;
   }
-  @media (max-width: 900px) { .about-heading { white-space: normal; } }
+  @media (max-width: 900px) {
+    /* In column layout flex-basis becomes a height — reset to auto */
+    .about-heading { flex: 0 0 auto; white-space: normal; }
+  }
   .stats-grid {
     flex: 0 0 auto;
     display: flex;
@@ -349,7 +355,17 @@
     gap: 40px;
     margin-left: auto;
   }
-  @media (max-width: 900px) { .stats-grid { flex-wrap: wrap; gap: 24px 20px; } }
+  @media (max-width: 900px) {
+    /* Remove right-push so stats align with the heading on the left */
+    .stats-grid { flex-wrap: wrap; gap: 28px 32px; margin-left: 0; justify-content: flex-start; }
+  }
+  @media (max-width: 640px) {
+    /* Two-column stat grid: each item takes exactly half the row */
+    .stats-grid { gap: 24px 0; width: 100%; }
+    .stat-item { flex: 0 0 50%; padding-right: 12px; }
+  }
+  @media (max-width: 1024px) { .about-stats { padding: 40px 40px; } }
+  @media (max-width: 640px)  { .about-stats { padding: 36px 24px; } }
   .stat-item { display: flex; flex-direction: column; }
   .stat-number {
     font-family: 'Montserrat', sans-serif;
@@ -412,6 +428,8 @@
     color: rgba(200,169,110,.65);
     margin-bottom: 48px;
   }
+  @media (max-width: 1024px) { .mission { padding: 120px 40px; } }
+  @media (max-width: 640px)  { .mission { padding: 80px 24px; min-height: auto; } }
 
   /* ──── FOOTER ──── */
   footer {
@@ -419,6 +437,8 @@
     padding: 80px 48px 48px;
     border-top: 1px solid rgba(255,255,255,.06);
   }
+  @media (max-width: 1024px) { footer { padding: 60px 40px 36px; } }
+  @media (max-width: 640px)  { footer { padding: 48px 24px 28px; } }
   .footer-inner {
     max-width: 1200px;
     margin: 0 auto;
@@ -438,6 +458,10 @@
     text-transform: uppercase;
   }
   .footer-logo span { font-weight: 300; }
+  /* Logo overflows mobile at 1.8rem + .3em spacing — scale down */
+  @media (max-width: 640px) {
+    .footer-logo { font-size: 1.3rem; letter-spacing: .15em; }
+  }
 
   .footer-contact {
     display: flex;
@@ -456,6 +480,10 @@
   }
   .footer-contact a:hover { color: var(--accent); }
   .footer-sep { color: rgba(200,169,110,.2); font-size: .65rem; }
+  /* Stack contact items as a column on mobile — cleaner than wrapping inline */
+  @media (max-width: 640px) {
+    .footer-contact { flex-direction: column; gap: 10px; }
+  }
 
   .footer-social {
     display: flex;
@@ -507,9 +535,26 @@
   .d6 { transition-delay: .6s; }
 
   /* Responsive header */
+  @media (max-width: 1024px) {
+    /* Logo: slightly tighter letter-spacing on tablet so it reads better */
+    .logo-text { letter-spacing: .18em; }
+  }
   @media (max-width: 640px) {
     .header { padding: 20px 24px; }
     .header.scrolled { padding: 14px 24px; }
+    /* Logo: larger font + tight spacing — bigger visual weight, still fits header */
+    .logo-text { font-size: 1.6rem; letter-spacing: .08em; }
+  }
+
+  /* Nav overlay: expand width & shrink padding on small phones so long nav
+     items like "Property Management" never get clipped */
+  @media (max-width: 480px) {
+    .nav-overlay { width: 88%; padding: 32px 24px 48px; }
+  }
+
+  /* Footer separator: hide on small screens to avoid awkward wrapping */
+  @media (max-width: 480px) {
+    .footer-sep { display: none; }
   }
 
   /* ──── PAGE SYSTEM (multi-page: each page is its own file) ──── */
@@ -764,7 +809,7 @@
     .cp-newsletter { padding: 60px 24px; }
     .cp-form { flex-direction: column; }
     .cp-form input { border-right: 1px solid rgba(255,255,255,.15); border-bottom: none; }
-    .cp-form button { padding: 16px 24px; }
+    .cp-form button { border-top: none; padding: 16px 24px; }
   }
 
   /* ──────────────────────────────────────────

@@ -2,6 +2,10 @@
 
 [build]
   publish = "."
+  command = "npm install"
+
+[functions]
+  node_bundler = "esbuild"
 
 # Clean URLs - No .html extensions
 [[redirects]]

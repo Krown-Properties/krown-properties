@@ -34,28 +34,26 @@ jobs:
           git config user.email "actions@github.com"
 
       - name: Fetch all branches
-        run: |
-          git fetch origin main:main
-          git fetch origin github:github
+        run: git fetch --all
 
       - name: Check for differences
         id: check
         run: |
           if git diff --quiet origin/main origin/github; then
             echo "no_changes=true" >> $GITHUB_OUTPUT
-            echo "No changes to promote - github and main are identical"
+            echo "⚠️ No changes to promote - github and main are identical"
           else
             echo "no_changes=false" >> $GITHUB_OUTPUT
-            echo "Changes detected - ready to merge"
+            echo "✅ Changes detected - ready to merge"
           fi
 
       - name: Merge github into main
         if: steps.check.outputs.no_changes == 'false'
         run: |
-          git checkout main
+          git checkout -B main origin/main
 
           if [ "${{ github.event.inputs.merge_method }}" == "squash" ]; then
-            git merge --squash github
+            git merge --squash origin/github
             git commit -m "Promote development to production
 
             ${{ github.event.inputs.reason }}
@@ -64,7 +62,7 @@ jobs:
             Promoted by: ${{ github.actor }}
             Workflow: ${{ github.run_id }}"
           else
-            git merge github --no-ff -m "Merge github into main
+            git merge origin/github --no-ff -m "Merge github into main
 
             ${{ github.event.inputs.reason }}
 

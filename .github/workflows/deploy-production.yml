@@ -1,4 +1,4 @@
-name: Deploy to Production (Netlify)
+name: Deploy to Production
 
 on:
   # Auto-deploy when code is pushed to main

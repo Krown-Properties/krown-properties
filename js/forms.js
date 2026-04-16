@@ -1,128 +1,134 @@
 // ═══════════════════════════════════════════════════════
-//  Krown Properties — Form Handlers
-//  Handles enquiry form submissions
+//  Krown Properties — Enquiry Form
+//  Submits directly to Supabase (no backend dependency)
 // ═══════════════════════════════════════════════════════
 
 (function () {
   'use strict';
 
-  // ──── PROJECT ENQUIRY FORM ────
-  // Handles the "Enquire Now" form on project detail pages
+  // ── Validation helpers ──────────────────────────────
 
-  function handleProjectEnquiryForm() {
-    var form = document.querySelector('.pd-form form');
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function isValidPhone(phone) {
+    // Strip spaces, dashes, parens, plus — must leave 7–15 digits
+    const digits = phone.replace(/[\s\-().+]/g, '');
+    return /^\d{7,15}$/.test(digits);
+  }
+
+  // ── UI helpers ──────────────────────────────────────
+
+  function showMessage(type, text) {
+    const existing = document.querySelector('.form-message');
+    if (existing) existing.remove();
+
+    const el = document.createElement('div');
+    el.className  = 'form-message form-message-' + type;
+    el.textContent = text;
+
+    const form = document.querySelector('.pd-form form');
+    if (!form) return;
+
+    form.parentNode.insertBefore(el, form.nextSibling);
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    setTimeout(() => el.remove(), 6000);
+  }
+
+  function setSubmitting(btn, isSubmitting) {
+    btn.disabled    = isSubmitting;
+    btn.textContent = isSubmitting ? 'Submitting…' : 'Submit Enquiry';
+  }
+
+  // ── Form handler ────────────────────────────────────
+
+  function initEnquiryForm() {
+    const form = document.querySelector('.pd-form form');
     if (!form) return;
 
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      // Get form values
-      var firstName = document.getElementById('pd-fname').value.trim();
-      var lastName = document.getElementById('pd-lname').value.trim();
-      var email = document.getElementById('pd-email').value.trim();
-      var phone = document.getElementById('pd-phone').value.trim();
-      var enquiryType = document.getElementById('pd-type').value;
-      var message = document.getElementById('pd-message').value.trim();
+      // Collect values
+      const firstName   = document.getElementById('pd-fname').value.trim();
+      const lastName    = document.getElementById('pd-lname').value.trim();
+      const email       = document.getElementById('pd-email').value.trim();
+      const phone       = document.getElementById('pd-phone').value.trim();
+      const enquiryType = document.getElementById('pd-type').value;
+      const message     = document.getElementById('pd-message').value.trim();
 
-      // Validate required fields
-      if (!firstName || !lastName || !email) {
-        showMessage('error', 'Please fill in all required fields');
+      // Validate
+      if (!firstName || !lastName) {
+        showMessage('error', 'Please enter your first and last name.');
         return;
       }
 
-      // Validate email format
+      if (!email) {
+        showMessage('error', 'Please enter your email address.');
+        return;
+      }
+
       if (!isValidEmail(email)) {
-        showMessage('error', 'Please enter a valid email address');
+        showMessage('error', 'Please enter a valid email address.');
         return;
       }
 
-      // Disable submit button
-      var submitBtn = form.querySelector('button[type="submit"]');
-      var originalText = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting...';
+      if (!phone) {
+        showMessage('error', 'Please enter your phone number.');
+        return;
+      }
+
+      if (!isValidPhone(phone)) {
+        showMessage('error', 'Please enter a valid phone number (at least 7 digits).');
+        return;
+      }
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      setSubmitting(submitBtn, true);
 
       try {
-        // Submit to Netlify Function
-        var response = await fetch('/.netlify/functions/submit-enquiry', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            phone: phone,
-            enquiryType: enquiryType,
-            message: message
-          })
-        });
+        // Initialise Supabase client (uses globals defined in HTML)
+        const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        var result = await response.json();
+        const { error } = await client.from('enquiries').insert([{
+          first_name:   firstName,
+          last_name:    lastName,
+          email:        email,
+          phone:        phone,
+          enquiry_type: enquiryType || null,
+          message:      message     || null
+        }]);
 
-        if (response.ok && result.success) {
-          // Success
-          showMessage('success', result.message || 'Thank you for your enquiry! We will be in touch soon.');
-          form.reset();
-        } else {
-          // Error
-          showMessage('error', result.error || 'Something went wrong. Please try again.');
+        if (error) {
+          console.error('[Enquiry] Supabase insert failed');
+          console.error('[Enquiry] Code:   ', error.code);
+          console.error('[Enquiry] Message:', error.message);
+          console.error('[Enquiry] Details:', error.details);
+          showMessage('error', 'Something went wrong. Please try again or call us directly.');
+          return;
         }
 
-      } catch (error) {
-        console.error('Form submission error:', error);
-        showMessage('error', 'Unable to submit enquiry. Please try again or contact us directly.');
+        console.log('[Enquiry] Submitted successfully');
+        showMessage('success', 'Thank you for your enquiry! We will be in touch soon.');
+        form.reset();
+
+      } catch (err) {
+        console.error('[Enquiry] Unexpected error:', err);
+        showMessage('error', 'Unable to submit. Please try again or contact us directly.');
       } finally {
-        // Re-enable submit button
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
+        setSubmitting(submitBtn, false);
       }
     });
   }
 
-  // ──── HELPER FUNCTIONS ────
+  // ── Init ─────────────────────────────────────────────
 
-  function isValidEmail(email) {
-    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  }
-
-  function showMessage(type, message) {
-    // Remove any existing messages
-    var existingMsg = document.querySelector('.form-message');
-    if (existingMsg) existingMsg.remove();
-
-    // Create message element
-    var msgEl = document.createElement('div');
-    msgEl.className = 'form-message form-message-' + type;
-    msgEl.textContent = message;
-
-    // Insert after form
-    var form = document.querySelector('.pd-form form');
-    if (form) {
-      form.parentNode.insertBefore(msgEl, form.nextSibling);
-
-      // Auto-remove after 5 seconds
-      setTimeout(function () {
-        msgEl.remove();
-      }, 5000);
-
-      // Scroll message into view
-      msgEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  }
-
-  // ──── INITIALIZE ────
-
-  // Wait for DOM to be fully loaded
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      handleProjectEnquiryForm();
-    });
+    document.addEventListener('DOMContentLoaded', initEnquiryForm);
   } else {
-    // DOM already loaded
-    handleProjectEnquiryForm();
+    initEnquiryForm();
   }
 
 })();

@@ -1,3 +1,7 @@
+// Supabase credentials
+var SUPABASE_URL = 'https://wedyxdwjgtacplkbzjne.supabase.co';
+var SUPABASE_ANON_KEY = 'sb_publishable_TAJm7-CNL3ZxHb-nIjUs9Q_AMG_C';
+
 // Environment configuration
 // Automatically detects dev vs production
 

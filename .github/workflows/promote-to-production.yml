@@ -6,39 +6,32 @@ on:
       merge_method:
         description: 'Merge method'
         required: true
-        default: 'squash'
+        default: 'merge'
         type: choice
         options:
           - merge
           - squash
-      reason:
-        description: 'Reason for promotion'
-        required: false
-        default: 'Promoting tested changes to production'
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   promote:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout github branch
         uses: actions/checkout@v4
         with:
+          ref: github
           fetch-depth: 0
-
-      - name: Install GitHub CLI
-        run: sudo apt-get update && sudo apt-get install gh -y
 
       - name: Configure Git
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
 
-      - name: Fetch branches
+      - name: Fetch all branches
         run: git fetch origin main github
 
       - name: Check for differences
@@ -52,25 +45,22 @@ jobs:
             echo "Changes detected"
           fi
 
-      - name: Create Pull Request
+      - name: Merge github into main
         if: steps.check.outputs.no_changes == 'false'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr create \
-            --base main \
-            --head github \
-            --title "Promote github to main" \
-            --body "${{ github.event.inputs.reason }}"
+          git checkout -B main origin/main
 
-      - name: Merge Pull Request
+          if [ "${{ github.event.inputs.merge_method }}" == "squash" ]; then
+            git merge --squash origin/github
+            git commit -m "Promote github to main"
+          else
+            git merge origin/github --no-ff -m "Merge github into main"
+          fi
+
+      - name: Push to main
         if: steps.check.outputs.no_changes == 'false'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr merge github \
-            --${{ github.event.inputs.merge_method }} \
-            --delete-branch=false
+          git push origin main
 
       - name: No changes
         if: steps.check.outputs.no_changes == 'true'

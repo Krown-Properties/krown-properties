@@ -77,7 +77,7 @@
     padding: 40px 40px 60px;
     transform: translateX(100%);
     transition: transform .5s var(--ease);
-    border-left: 1px solid rgba(255,255,255,.07);
+    border-left: 1px solid rgba(203,161,53,.3);
   }
   .nav-overlay.open { transform: translateX(0); }
 
@@ -131,10 +131,11 @@
     display: block;
     padding: 18px 0;
     opacity: 0;
-    transform: translateX(20px);
-    transition: opacity .4s var(--ease), transform .4s var(--ease), color .2s;
+    transform: translateY(-14px);
+    transition: opacity .4s var(--ease), transform .4s var(--ease), color .2s, padding-left .25s var(--ease);
   }
-  .nav-overlay.open .nav-list a { opacity: 1; transform: translateX(0); }
+  .nav-overlay.open .nav-list a { opacity: 1; transform: translateY(0); }
+  .nav-list a:hover { padding-left: 10px; }
   .nav-overlay.open .nav-list li:nth-child(1) a { transition-delay: .15s; }
   .nav-overlay.open .nav-list li:nth-child(2) a { transition-delay: .2s; }
   .nav-overlay.open .nav-list li:nth-child(3) a { transition-delay: .25s; }
@@ -154,16 +155,16 @@
   .hero-bg {
     position: absolute;
     inset: 0;
-    background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80') center/cover no-repeat;
-    transform: scale(1.08);
-    animation: heroZoom 12s var(--ease) forwards;
+    background: url('../img/41-angelo-avenue/DJI_09347.jpg') center/cover no-repeat;
+    transform: scale(1.05);
+    animation: heroZoom 20s linear forwards;
   }
   @keyframes heroZoom { to { transform: scale(1); } }
 
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.35) 50%, rgba(0,0,0,.7) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,.7) 0%, rgba(0,0,0,.65) 50%, rgba(0,0,0,.8) 100%);
   }
 
   .hero-intro {
@@ -171,12 +172,11 @@
     inset: 0;
     background: var(--main);
     z-index: 10;
-    animation: introReveal 1.2s 0.3s var(--ease) forwards;
-    transform-origin: top;
+    animation: introReveal 1s 0.3s cubic-bezier(.76,0,.24,1) forwards;
   }
   @keyframes introReveal {
-    0%   { clip-path: inset(0 0 0% 0); }
-    100% { clip-path: inset(0 0 100% 0); }
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(100%); }
   }
 
   .hero-content {
@@ -205,7 +205,7 @@
   .hero-group {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(1.75rem, 5vw, 4rem);
-    font-weight: 300;
+    font-weight: 700;
     letter-spacing: .25em;
     color: var(--accent);
     transform: translateX(60px);
@@ -214,7 +214,6 @@
   }
   @keyframes slideRight { to { transform: translateX(0); opacity: 1; } }
   @keyframes slideLeft  { to { transform: translateX(0); opacity: 1; } }
-
   .hero-sub {
     margin-top: 20px;
     font-size: clamp(.65rem, 1.5vw, .8rem);
@@ -257,6 +256,18 @@
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+    flex-shrink: 0;
+    opacity: .7;
   }
   .section-title {
     font-family: 'Cormorant Garamond', serif;
@@ -267,6 +278,15 @@
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 32px;
+  }
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 1.5px;
+    background: var(--accent);
+    margin-top: 18px;
+    opacity: .55;
   }
   .section-body {
     font-size: .85rem;
@@ -289,7 +309,7 @@
     text-decoration: none;
     transition: background .3s, border-color .3s, color .3s;
   }
-  .btn:hover { background: var(--white); color: var(--main); border-color: var(--accent); }
+  .btn:hover { background: var(--accent); color: var(--main); border-color: var(--accent); }
   .btn-line {
     background: transparent;
     border: 1px solid rgba(255,255,255,.5);
@@ -399,12 +419,12 @@
   .mission-bg {
     position: absolute;
     inset: 0;
-    background: url('https://images.unsplash.com/photo-1613977257365-aaae5a9817ff?w=1920&q=80') right center/cover no-repeat;
+    background: url('../img/41-angelo-avenue/DJI_0932.jpg') center/cover no-repeat;
   }
   .mission-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 45%, rgba(0,0,0,.2) 100%);
+    background: linear-gradient(130deg, rgba(0,0,0,.97) 0%, rgba(0,0,0,.78) 55%, rgba(0,0,0,.08) 100%);
   }
   .mission-content {
     position: relative;
@@ -431,11 +451,116 @@
   @media (max-width: 1024px) { .mission { padding: 120px 40px; } }
   @media (max-width: 640px)  { .mission { padding: 80px 24px; min-height: auto; } }
 
+  /* ──── AREAS SERVED ──── */
+  .areas-served {
+    background: var(--main);
+    padding: 60px 0 48px;
+    overflow: hidden;
+    border-top: 1px solid rgba(203,161,53,.15);
+  }
+  .as-inner {
+    max-width: 1200px;
+    margin: 0 0 32px;
+    padding: 0 80px;
+  }
+  .as-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2vw, 1.6rem);
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .as-marquee-wrap {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+  .as-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    animation: kp-marquee 22s linear infinite;
+  }
+  .as-tag {
+    display: inline-block;
+    padding: 12px 32px;
+
+    color: var(--accent);
+    font-family: 'Montserrat', sans-serif;
+    font-size: .72rem;
+    font-weight: 400;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ──── BUILDING PARTNERS ──── */
+  .build-partners {
+    background: var(--main);
+    padding: 60px 0 48px;
+    overflow: hidden;
+    border-top: 1px solid rgba(203,161,53,.15);
+  }
+  .bp-inner {
+    max-width: 1200px;
+    margin: 0 0 32px;
+    padding: 0 80px;
+  }
+  .bp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2vw, 1.6rem);
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .bp-marquee-wrap {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+  .bp-track {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    width: max-content;
+    animation: kp-marquee 30s linear infinite;
+  }
+  .bp-track img {
+    height: 56px;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    opacity: .75;
+    transition: opacity .3s;
+  }
+  .bp-track img:hover { opacity: 1; }
+
+  @keyframes kp-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @media (max-width: 1024px) {
+    .as-inner, .bp-inner { padding: 0 40px; }
+    .areas-served, .build-partners { padding: 48px 0 36px; }
+  }
+  @media (max-width: 640px) {
+    .as-inner, .bp-inner { padding: 0 24px; margin-bottom: 24px; }
+    .areas-served, .build-partners { padding: 36px 0 28px; }
+    .as-tag { padding: 10px 24px; font-size: .68rem; }
+    .bp-track img { height: 44px; }
+    .bp-track { gap: 44px; }
+  }
+
   /* ──── FOOTER ──── */
   footer {
-    background: var(--main-light);
+    background: var(--main);
     padding: 80px 48px 48px;
-    border-top: 1px solid rgba(255,255,255,.06);
+    border-top: 1px solid rgba(203,161,53,.3);
   }
   @media (max-width: 1024px) { footer { padding: 60px 40px 36px; } }
   @media (max-width: 640px)  { footer { padding: 48px 24px 28px; } }
@@ -515,14 +640,14 @@
   /* ──── SCROLL REVEAL ──── */
   .reveal {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity .9s var(--ease), transform .9s var(--ease);
+    transform: translateY(22px);
+    transition: opacity .65s var(--ease), transform .65s var(--ease);
   }
   .reveal.visible { opacity: 1; transform: none; }
   .reveal-left {
     opacity: 0;
-    transform: translateX(-40px);
-    transition: opacity .9s var(--ease), transform .9s var(--ease);
+    transform: translateX(-32px);
+    transition: opacity .65s var(--ease), transform .65s var(--ease);
   }
   .reveal-left.visible { opacity: 1; transform: none; }
 
@@ -574,7 +699,7 @@
   .cp-hero-bg {
     position: absolute;
     inset: 0;
-    background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80') center/cover no-repeat;
+    background: url('../img/86-taylor-street/86TaylorStreet_exterior1.jpg') center/cover no-repeat;
     transform: scale(1.04);
     transition: transform 8s ease;
   }
@@ -601,10 +726,11 @@
     transform: translateY(16px);
     transition: opacity .7s var(--ease), transform .7s var(--ease);
   }
-  #current-projects-page.page-active .cp-hero-label { opacity: 1; transform: none; transition-delay: .15s; }
+  #current-projects-page.page-active .cp-hero-label,
+  #completed-homes-page.page-active .cp-hero-label { opacity: 1; transform: none; transition-delay: .15s; }
   .cp-hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 7vw, 6rem);
+    font-size: clamp(1.5rem, 3.5vw, 3rem);
     font-weight: 500;
     letter-spacing: .15em;
     text-transform: uppercase;
@@ -615,7 +741,8 @@
     transform: translateY(24px);
     transition: opacity .8s var(--ease), transform .8s var(--ease);
   }
-  #current-projects-page.page-active .cp-hero-title { opacity: 1; transform: none; transition-delay: .3s; }
+  #current-projects-page.page-active .cp-hero-title,
+  #completed-homes-page.page-active .cp-hero-title { opacity: 1; transform: none; transition-delay: .3s; }
   .cp-hero-btn {
     display: inline-block;
     padding: 14px 40px;
@@ -630,8 +757,9 @@
     opacity: 0;
     transform: translateY(16px);
   }
-  #current-projects-page.page-active .cp-hero-btn { opacity: 1; transform: none; transition: opacity .7s var(--ease) .5s, transform .7s var(--ease) .5s, background .3s, border-color .3s, color .3s; }
-  .cp-hero-btn:hover { background: var(--white); color: var(--main); border-color: var(--accent); }
+  #current-projects-page.page-active .cp-hero-btn,
+  #completed-homes-page.page-active .cp-hero-btn { opacity: 1; transform: none; transition: opacity .7s var(--ease) .5s, transform .7s var(--ease) .5s, background .3s, border-color .3s, color .3s; }
+  .cp-hero-btn:hover { background: var(--accent); color: var(--main); border-color: var(--accent); }
 
   /* ──── PROJECT ITEMS ──── */
   .project-item {
@@ -649,16 +777,21 @@
     border-radius: 16px;
     margin: 0 40px;
     height: 520px;
+    min-height: 0;
     box-shadow: 0 24px 60px rgba(0,0,0,.45);
+    transition: box-shadow .6s var(--ease);
   }
   .project-img-wrap img {
     width: 100%; height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 7s ease;
+    transition: transform 9s ease;
     border-radius: 16px;
   }
-  .project-item:hover .project-img-wrap img { transform: scale(1.05); }
+  .project-item:hover .project-img-wrap {
+    box-shadow: 0 28px 70px rgba(0,0,0,.5), 0 0 0 1px rgba(203,161,53,.25);
+  }
+  .project-item:hover .project-img-wrap img { transform: scale(1.04); }
   .project-text-wrap {
     flex: 1;
     padding: 80px 72px;
@@ -720,7 +853,7 @@
     align-self: flex-start;
     transition: background .3s, border-color .3s, color .3s;
   }
-  .project-link:hover { background: var(--white); color: var(--main); border-color: var(--accent); }
+  .project-link:hover { background: var(--accent); color: var(--main); border-color: var(--accent); }
 
   /* ──── CP NEWSLETTER ──── */
   .cp-newsletter {
@@ -796,21 +929,98 @@
   .cp-form button:hover { background: var(--white); border-color: var(--accent); color: var(--main); }
 
 
+  /* Project list containers — bottom breathing room before footer */
+  #cpProjectsList, #chProjectsList, #hfsProjectsList {
+    padding-bottom: 80px;
+  }
+
+  /* ── Tablet landscape / small desktop (≤1024px) ── */
   @media (max-width: 1024px) {
-    .project-item, .project-item.reverse { flex-direction: column; min-height: auto; }
-    .project-img-wrap { flex: 0 0 380px; height: 380px; width: calc(100% - 48px); margin: 24px 24px 0; }
-    .project-text-wrap { padding: 48px 40px; }
+    .project-item, .project-item.reverse {
+      flex-direction: column;
+      min-height: auto;
+      padding: 32px 0;
+    }
+    .project-img-wrap {
+      flex: none;
+      height: 420px;
+      width: calc(100% - 48px);
+      margin: 0 auto;
+      border-radius: 14px;
+    }
+    .project-text-wrap { padding: 48px 40px 56px; }
     .cp-hero { padding: 60px 48px; }
   }
+
+  /* ── iPad portrait (≤768px) ── */
+  @media (max-width: 768px) {
+    .project-item { padding: 24px 0; }
+    .project-img-wrap {
+      height: 360px;
+      width: calc(100% - 32px);
+    }
+    .project-text-wrap { padding: 36px 32px 44px; }
+    .project-name { font-size: clamp(1.15rem, 4.5vw, 1.6rem); }
+    .project-desc { font-size: .68rem; }
+    #cpProjectsList, #chProjectsList, #hfsProjectsList { padding-bottom: 60px; }
+  }
+
+  /* ── Mobile (≤640px) ── */
   @media (max-width: 640px) {
-    .project-img-wrap { height: 260px; width: calc(100% - 32px); margin: 16px 16px 0; border-radius: 12px; }
-    .project-text-wrap { padding: 36px 24px; }
+    .project-item { padding: 20px 0; }
+    .project-img-wrap {
+      height: 260px;
+      width: calc(100% - 24px);
+      margin: 0 auto;
+      border-radius: 12px;
+    }
+    .project-text-wrap { padding: 28px 20px 36px; }
+    .project-name { font-size: clamp(1.1rem, 5.5vw, 1.45rem); }
+    .project-desc { font-size: .67rem; max-width: 100%; }
+    .project-link { padding: 11px 28px; font-size: .6rem; }
     .cp-hero { padding: 50px 24px; height: 100vh; }
     .cp-newsletter { padding: 60px 24px; }
     .cp-form { flex-direction: column; }
     .cp-form input { border-right: 1px solid rgba(255,255,255,.15); border-bottom: none; }
     .cp-form button { border-top: none; padding: 16px 24px; }
+    #cpProjectsList, #chProjectsList, #hfsProjectsList { padding-bottom: 48px; }
   }
+
+  /* ── Small phones (≤480px) ── */
+  @media (max-width: 480px) {
+    .project-img-wrap { height: 220px; }
+    .project-text-wrap { padding: 24px 16px 32px; }
+    .project-name { font-size: clamp(1rem, 6vw, 1.35rem); }
+    .project-category { font-size: .44rem; }
+    .project-link { padding: 10px 22px; width: 100%; text-align: center; box-sizing: border-box; }
+  }
+
+  /* ──────────────────────────────────────────
+     COMPLETED HOMES PAGE
+  ────────────────────────────────────────── */
+
+  .ch-hero-bg {
+    background: url('../img/39-millen-ave/10_aerial.jpg') center/cover no-repeat;
+  }
+
+  .ch-intro {
+    padding: 80px 80px 40px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .ch-intro-inner { text-align: left; }
+  .ch-intro-body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: .9rem;
+    font-weight: 300;
+    color: rgba(255,255,255,.7);
+    line-height: 1.85;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 1024px) { .ch-intro { padding: 60px 48px 32px; } }
+  @media (max-width: 768px)  { .ch-intro { padding: 52px 32px 28px; } .ch-intro-body { font-size: .82rem; } }
+  @media (max-width: 640px)  { .ch-intro { padding: 44px 20px 20px; } .ch-intro-body { font-size: .78rem; } }
 
   /* ──────────────────────────────────────────
      ABOUT US PAGE
@@ -829,7 +1039,7 @@
   .au-hero-bg {
     position: absolute;
     inset: 0;
-    background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80') center/cover no-repeat;
+    background: url('../img/41-angelo-avenue/DJI_09347.jpg') center/cover no-repeat;
     transform: scale(1.04);
     transition: transform 8s ease;
   }
@@ -859,7 +1069,7 @@
   #about-us-page.page-active .au-hero-label { opacity: 1; transform: none; transition-delay: .15s; }
   .au-hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 7vw, 6rem);
+    font-size: clamp(1.5rem, 3.5vw, 3rem);
     font-weight: 500;
     letter-spacing: .15em;
     text-transform: uppercase;
@@ -1078,7 +1288,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=80') center/cover no-repeat;
+    background: url('../img/46-arundel/Arundel_exterior_1.jpg') center/cover no-repeat;
     opacity: .12;
   }
   .au-cta-inner { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
@@ -1144,7 +1354,7 @@
   .pm-hero-bg {
     position: absolute;
     inset: 0;
-    background: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=80') center/cover no-repeat;
+    background: url('../img/41-angelo-avenue/DJI_0932.jpg') center/cover no-repeat;
     transform: scale(1.04);
     transition: transform 8s ease;
   }
@@ -1218,7 +1428,7 @@
     transition: opacity .7s var(--ease) .6s, transform .7s var(--ease) .6s,
                 background .3s, border-color .3s, color .3s;
   }
-  .pm-hero-btn:hover { background: var(--white); color: var(--main); border-color: var(--accent); }
+  .pm-hero-btn:hover { background: var(--accent); color: var(--main); border-color: var(--accent); }
 
   /* Intro */
   .pm-intro {
@@ -1338,7 +1548,7 @@
     top: 0; right: 0;
     width: 45%;
     height: 100%;
-    background: url('https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&q=80') center/cover no-repeat;
+    background: url('../img/6-bacot-place/DSC06067.jpg') center/cover no-repeat;
     opacity: .08;
   }
   .pm-detail-inner {
@@ -1498,7 +1708,7 @@
   .pm-cta-bg {
     position: absolute;
     inset: 0;
-    background: url('https://images.unsplash.com/photo-1613977257365-aaae5a9817ff?w=1920&q=80') right center/cover no-repeat;
+    background: url('../img/22-walmsley-road/DJI_20250908174217_0815_D-Recovered.jpg') center/cover no-repeat;
   }
   .pm-cta-overlay {
     position: absolute;
@@ -1599,7 +1809,7 @@
   #project-detail-page.page-active .pd-hero-label { opacity: 1; transform: none; transition-delay: .15s; }
   .pd-hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 8vw, 7rem);
+    font-size: clamp(1.5rem, 4vw, 3.5rem);
     font-weight: 500;
     letter-spacing: .15em;
     text-transform: uppercase;
@@ -1649,6 +1859,7 @@
   }
   @media (max-width: 1024px) { .pd-overview-inner { flex-direction: column; gap: 48px; } }
   .pd-overview-text { flex: 1; }
+  #project-detail-page .section-title { font-size: clamp(1.1rem, 2vw, 1.6rem); }
   .pd-overview-aside {
     flex: 0 0 340px;
     display: flex;
@@ -1932,13 +2143,13 @@
   #reliance-page { display: none; }
   #reliance-page.page-active { display: block; }
   .rp-hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: flex-end; padding: 90px 80px; overflow: hidden; }
-  .rp-hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80') center/cover no-repeat; transform: scale(1.04); transition: transform 8s ease; }
+  .rp-hero-bg { position: absolute; inset: 0; background: url('../img/46-arundel/Arundel_exterior_1.jpg') center/cover no-repeat; transform: scale(1.04); transition: transform 8s ease; }
   .rp-hero.loaded .rp-hero-bg { transform: scale(1); }
   .rp-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,.6) 55%, rgba(0,0,0,.35) 100%); }
   .rp-hero-content { position: relative; z-index: 2; max-width: 1500px; width: 100%; }
   .rp-hero-label { font-size: .6rem; letter-spacing: .45em; font-weight: 400; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
   #reliance-page.page-active .rp-hero-label { opacity: 1; transform: none; transition-delay: .15s; }
-  .rp-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 7vw, 6rem); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); line-height: 1.05; margin-bottom: 20px; opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .rp-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3.5vw, 3rem); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); line-height: 1.05; margin-bottom: 20px; opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
   #reliance-page.page-active .rp-hero-title { opacity: 1; transform: none; transition-delay: .3s; }
   .rp-hero-sub { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 300; letter-spacing: .15em; text-transform: uppercase; color: rgba(203,161,53,.55); opacity: 0; transform: translateY(14px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
   #reliance-page.page-active .rp-hero-sub { opacity: 1; transform: none; transition-delay: .45s; }
@@ -1977,13 +2188,13 @@
   #process-page { display: none; }
   #process-page.page-active { display: block; }
   .proc-hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: flex-end; padding: 90px 80px; overflow: hidden; }
-  .proc-hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1920&q=80') center/cover no-repeat; transform: scale(1.04); transition: transform 8s ease; }
+  .proc-hero-bg { position: absolute; inset: 0; background: url('../img/100-mountain-road/100MountainRoad_exterior1.jpg') center/cover no-repeat; transform: scale(1.04); transition: transform 8s ease; }
   .proc-hero.loaded .proc-hero-bg { transform: scale(1); }
   .proc-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,.6) 55%, rgba(0,0,0,.35) 100%); }
   .proc-hero-content { position: relative; z-index: 2; max-width: 1500px; width: 100%; }
   .proc-hero-label { font-size: .6rem; letter-spacing: .45em; font-weight: 400; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
   #process-page.page-active .proc-hero-label { opacity: 1; transform: none; transition-delay: .15s; }
-  .proc-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 7vw, 6rem); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); line-height: 1.05; margin-bottom: 0; opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .proc-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3.5vw, 3rem); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); line-height: 1.05; margin-bottom: 0; opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
   #process-page.page-active .proc-hero-title { opacity: 1; transform: none; transition-delay: .3s; }
   .proc-intro { background: var(--main); padding: 100px 80px; }
   .proc-intro-inner { max-width: 760px; }
@@ -2049,8 +2260,8 @@
   /* These classes are used on all inner pages and need CSS-based reveal */
   .au-reveal, .pm-reveal, .cp-reveal, .pd-reveal {
     opacity: 0;
-    transform: translateY(36px);
-    transition: opacity .9s cubic-bezier(.25,.46,.45,.94), transform .9s cubic-bezier(.25,.46,.45,.94);
+    transform: translateY(22px);
+    transition: opacity .65s cubic-bezier(.25,.46,.45,.94), transform .65s cubic-bezier(.25,.46,.45,.94);
   }
   .au-reveal.visible, .pm-reveal.visible, .cp-reveal.visible, .pd-reveal.visible {
     opacity: 1;
@@ -2060,15 +2271,80 @@
   /* ─── MULTI-PAGE: PAGE WRAPPER VISIBILITY ─── */
   /* Each page's wrapper is always visible in multi-page mode */
   #home-page, #current-projects-page, #about-us-page, #pm-page,
-  #reliance-page, #process-page, #project-detail-page {
+  #reliance-page, #process-page, #project-detail-page, #completed-homes-page {
     display: none;
   }
   #home-page.page-active, #current-projects-page.page-active, #about-us-page.page-active,
   #pm-page.page-active, #reliance-page.page-active, #process-page.page-active,
-  #project-detail-page.page-active {
+  #project-detail-page.page-active, #completed-homes-page.page-active {
     display: block;
   }
 
-  /* ─── 5th nav item transition-delay (added for Property Management nav link) ─── */
+  /* ─── 5th–8th nav item transition-delays ─── */
   .nav-overlay.open .nav-list li:nth-child(5) a { transition-delay: .35s; }
   .nav-overlay.open .nav-list li:nth-child(6) a { transition-delay: .42s; }
+  .nav-overlay.open .nav-list li:nth-child(7) a { transition-delay: .49s; }
+  .nav-overlay.open .nav-list li:nth-child(8) a { transition-delay: .56s; }
+
+  /* ══════════════════════════════════════════════════════
+     HOMES FOR SALE PAGE
+  ══════════════════════════════════════════════════════ */
+  #hfs-page { display: none; }
+  #hfs-page.page-active { display: block; }
+
+  /* Hero */
+  .hfs-hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: flex-end; padding: 90px 80px; overflow: hidden; }
+  .hfs-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; background-repeat: no-repeat; transform: scale(1.04); transition: transform 8s ease; }
+  .hfs-hero.loaded .hfs-hero-bg { transform: scale(1); }
+  .hfs-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,.62) 52%, rgba(0,0,0,.32) 100%); }
+  .hfs-hero-content { position: relative; z-index: 2; max-width: 1500px; width: 100%; }
+  .hfs-hero-label { font-size: .6rem; letter-spacing: .45em; font-weight: 400; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  #hfs-page.page-active .hfs-hero-label { opacity: 1; transform: none; transition-delay: .15s; }
+  .hfs-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3.5vw, 3rem); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); line-height: 1.05; margin-bottom: 20px; opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  #hfs-page.page-active .hfs-hero-title { opacity: 1; transform: none; transition-delay: .3s; }
+  .hfs-hero-sub { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2vw, 1.4rem); font-weight: 300; letter-spacing: .15em; text-transform: uppercase; color: rgba(203,161,53,.5); opacity: 0; transform: translateY(14px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  #hfs-page.page-active .hfs-hero-sub { opacity: 1; transform: none; transition-delay: .45s; }
+
+  /* Filter bar */
+  .hfs-filter-bar { background: var(--main); border-top: 1px solid rgba(255,255,255,.06); border-bottom: 1px solid rgba(255,255,255,.06); padding: 0 80px; display: flex; align-items: center; overflow-x: auto; scrollbar-width: none; }
+  .hfs-filter-bar::-webkit-scrollbar { display: none; }
+  .hfs-filter { background: none; border: none; border-bottom: 2px solid transparent; padding: 22px 30px; font-family: 'Montserrat', sans-serif; font-size: .56rem; letter-spacing: .35em; font-weight: 400; text-transform: uppercase; color: rgba(203,161,53,.38); cursor: pointer; transition: color .25s, border-color .25s; white-space: nowrap; }
+  .hfs-filter:hover { color: rgba(203,161,53,.8); }
+  .hfs-filter.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* Grid section */
+  .hfs-section { background: var(--main); padding: 72px 80px 140px; }
+  .hfs-grid { max-width: 1500px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+
+  /* Card */
+  .hfs-card { background: #0b0b0b; border: 1px solid rgba(255,255,255,.07); border-radius: 16px; overflow: hidden; opacity: 0; transform: translateY(30px); transition: opacity .65s var(--ease), transform .65s var(--ease), border-color .35s, box-shadow .45s var(--ease); display: flex; flex-direction: column; }
+  .hfs-card.visible { opacity: 1; transform: none; }
+  .hfs-card.visible:hover { transform: translateY(-7px); box-shadow: 0 32px 72px rgba(0,0,0,.6); border-color: rgba(203,161,53,.32); }
+  .hfs-card.hidden { display: none !important; }
+
+  /* Card image */
+  .hfs-card-img-wrap { position: relative; aspect-ratio: 16 / 9; overflow: hidden; flex-shrink: 0; }
+  .hfs-card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 7s ease; }
+  .hfs-card.visible:hover .hfs-card-img-wrap img { transform: scale(1.06); }
+  .hfs-card-badge { position: absolute; top: 14px; right: 14px; }
+
+  /* Card body */
+  .hfs-card-body { padding: 24px 26px 28px; display: flex; flex-direction: column; flex: 1; }
+  .hfs-card-category { font-size: .46rem; letter-spacing: .44em; font-weight: 400; text-transform: uppercase; color: var(--accent); opacity: .5; margin-bottom: 8px; }
+  .hfs-card-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 1.7vw, 1.55rem); font-weight: 500; color: var(--accent); letter-spacing: .06em; margin-bottom: 5px; line-height: 1.18; }
+  .hfs-card-location { font-size: .58rem; letter-spacing: .12em; color: rgba(203,161,53,.38); font-weight: 300; margin-bottom: 18px; }
+  .hfs-card-specs { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,.07); }
+  .hfs-card-spec { display: flex; align-items: center; gap: 5px; font-size: .58rem; letter-spacing: .06em; color: rgba(203,161,53,.52); font-weight: 300; }
+  .hfs-card-spec svg { width: 12px; height: 12px; flex-shrink: 0; stroke: var(--accent); opacity: .6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .hfs-card-desc { font-size: .67rem; line-height: 1.82; color: rgba(255,255,255,.32); font-weight: 300; margin-bottom: 24px; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .hfs-card-btn { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; padding: 11px 24px; font-family: 'Montserrat', sans-serif; font-size: .54rem; letter-spacing: .32em; text-transform: uppercase; font-weight: 500; color: var(--accent); border: 1px solid rgba(203,161,53,.28); text-decoration: none; transition: background .3s, border-color .3s, color .3s; }
+  .hfs-card-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; transition: transform .25s; }
+  .hfs-card-btn:hover { background: var(--accent); color: var(--main); border-color: var(--accent); }
+  .hfs-card-btn:hover svg { transform: translateX(3px); }
+
+  /* Responsive */
+  @media (max-width: 1200px) { .hfs-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 1024px) { .hfs-hero { padding: 60px 48px; } .hfs-section { padding: 56px 48px 100px; } }
+  @media (max-width: 768px)  { .hfs-hero { padding: 50px 32px; min-height: 520px; } .hfs-hero-title { font-size: clamp(2.6rem, 9vw, 4rem); } }
+  @media (max-width: 768px) { .hfs-grid { grid-template-columns: 1fr; gap: 22px; } }
+  @media (max-width: 640px) { .hfs-hero { padding: 44px 20px; min-height: 480px; } .hfs-hero-title { font-size: clamp(2.2rem, 11vw, 3.2rem); } .hfs-section { padding: 44px 20px 80px; } }

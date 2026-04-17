@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homes for Sale — Krown Properties</title>
+  <meta name="description" content="Browse Krown Properties' residential homes for sale across Auckland — quality new builds from boutique townhouses to premium developments." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://krownproperties.co.nz/homes-for-sale" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- Header and Nav injected by components.js -->
+<div id="kp-header"></div>
+
+<!-- HOMES FOR SALE PAGE WRAPPER -->
+<div id="hfs-page">
+
+  <!-- Hero -->
+  <section class="hfs-hero" id="hfsHero" aria-label="Homes for sale hero">
+    <div class="hfs-hero-bg" id="hfsHeroBg"></div>
+    <div class="hfs-hero-overlay"></div>
+    <div class="hfs-hero-content">
+      <p class="hfs-hero-label">Krown Properties</p>
+      <h1 class="hfs-hero-title">Homes<br>for Sale</h1>
+      <p class="hfs-hero-sub">Quality New Builds Across Auckland</p>
+    </div>
+  </section>
+
+
+  <!-- Property List -->
+  <main id="hfsProjectsList" aria-label="Properties for sale"></main>
+
+  <!-- Footer -->
+  <div id="kp-footer"></div>
+
+</div><!-- #hfs-page -->
+
+<script src="js/components.js"></script>
+<script src="js/projects-data.js"></script>
+<script>
+  // ── Render homes for sale using the same project-item layout as completedHomes ──
+  (function renderForSale() {
+    var container = document.getElementById('hfsProjectsList');
+    if (!container || typeof PROJECTS === 'undefined') return;
+
+    var FOR_SALE_KEYS = [
+      'walworth', 'walmsley', 'kurnell', 'angelo', 'broadview6',
+      'wilbur', 'arundel', 'millen', 'sunnyhills', 'wellesley', 'rosina'
+    ];
+
+    var entries = FOR_SALE_KEYS
+      .filter(function (k) { return PROJECTS[k]; })
+      .map(function (k) { return [k, PROJECTS[k]]; });
+
+    if (entries.length === 0) {
+      container.innerHTML = '<p style="text-align:center;padding:80px 24px;color:rgba(255,255,255,.5);">No properties listed at this time.</p>';
+      return;
+    }
+
+    container.innerHTML = entries.map(function (entry, i) {
+      var key = entry[0], p = entry[1];
+      var reverse = i % 2 !== 0 ? ' reverse' : '';
+      var imgSrc = (p.images && p.images[0]) ? p.images[0] : p.cardImage;
+      return '<div class="project-item' + reverse + ' cp-reveal">' +
+        '<div class="project-img-wrap">' +
+          '<img src="' + imgSrc + '" alt="' + p.name + '" loading="lazy" />' +
+        '</div>' +
+        '<div class="project-text-wrap">' +
+          '<p class="project-category">Homes for Sale</p>' +
+          '<h2 class="project-name">' + p.name + '</h2>' +
+          '<span class="project-status ' + p.statusClass + '">' + p.statusLabel + '</span>' +
+          '<p class="project-desc">' + p.cardDesc + '</p>' +
+          '<a href="project?id=' + key + '" class="project-link">View Project</a>' +
+        '</div>' +
+      '</div>';
+    }).join('\n');
+  })();
+</script>
+
+<script src="js/script.js"></script>
+<script>
+  // Activate page and set hero background
+  (function () {
+    // Use Mountain Road image (premium hero)
+    var heroBg = document.getElementById('hfsHeroBg');
+    if (heroBg) {
+      heroBg.style.backgroundImage = "url('img/6-broadview-place/homepageHOWICK.jpg')";
+    }
+
+    var wrapper = document.getElementById('hfs-page');
+    if (!wrapper) return;
+    wrapper.style.display = 'block';
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        wrapper.classList.add('page-active');
+        setTimeout(function () {
+          var hero = document.getElementById('hfsHero');
+          if (hero) hero.classList.add('loaded');
+        }, 100);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Completed Homes — Krown Properties</title>
+  <meta name="description" content="Explore Krown Properties' portfolio of completed residential developments across Auckland — quality homes delivered to the highest standard." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://krownproperties.co.nz/completedHomes.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- Header and Nav injected by components.js -->
+<div id="kp-header"></div>
+
+<!-- COMPLETED HOMES PAGE WRAPPER -->
+<div id="completed-homes-page">
+
+  <!-- Hero -->
+  <section class="cp-hero" id="chHero" aria-label="Completed homes hero">
+    <div class="cp-hero-bg ch-hero-bg" role="img" aria-label="Krown Properties completed residential developments"></div>
+    <div class="cp-hero-overlay"></div>
+    <div class="cp-hero-content">
+      <p class="cp-hero-label">Our Deliveries</p>
+      <h1 class="cp-hero-title">Completed<br>Homes</h1>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <div class="ch-intro">
+    <div class="ch-intro-inner cp-reveal">
+      <p class="section-label">Track Record</p>
+      <h2 class="section-title">Built &amp; Delivered</h2>
+      <p class="ch-intro-body">Every completed Krown Properties development represents our commitment to delivering quality homes on time and to the highest standard. These projects demonstrate our expertise across Auckland — from boutique townhouse collections to well-connected residential communities.</p>
+    </div>
+  </div>
+
+  <!-- Completed Projects List — rendered dynamically from PROJECTS data -->
+  <main id="chProjectsList" aria-label="Completed residential developments"></main>
+
+  <!-- Footer -->
+  <div id="kp-footer"></div>
+
+</div><!-- #completed-homes-page -->
+
+<script src="js/components.js"></script>
+<script src="js/projects-data.js"></script>
+<script>
+  // Render completed project cards (statusClass === 'status-completed')
+  (function renderCompletedProjects() {
+    var container = document.getElementById('chProjectsList');
+    if (!container || typeof PROJECTS === 'undefined') return;
+
+    var completed = Object.entries(PROJECTS).filter(function (entry) {
+      return entry[1].statusClass === 'status-completed';
+    });
+
+    if (completed.length === 0) {
+      container.innerHTML = '<p style="text-align:center;padding:80px 24px;color:rgba(255,255,255,.5);">No completed projects at this time.</p>';
+      return;
+    }
+
+    container.innerHTML = completed.map(function (entry, i) {
+      var key = entry[0], p = entry[1];
+      var reverse = i % 2 !== 0 ? ' reverse' : '';
+      var imgSrc = (p.images && p.images[0]) ? p.images[0] : p.cardImage;
+      return '<div class="project-item' + reverse + ' cp-reveal">' +
+        '<div class="project-img-wrap">' +
+          '<img src="' + imgSrc + '" alt="' + p.name + '" loading="lazy" />' +
+        '</div>' +
+        '<div class="project-text-wrap">' +
+          '<p class="project-category">Completed Homes</p>' +
+          '<h2 class="project-name">' + p.name + '</h2>' +
+          '<span class="project-status ' + p.statusClass + '">' + p.statusLabel + '</span>' +
+          '<p class="project-desc">' + p.cardDesc + '</p>' +
+          '<a href="project?id=' + key + '" class="project-link">View Project</a>' +
+        '</div>' +
+      '</div>';
+    }).join('\n');
+  })();
+</script>
+<script src="js/script.js"></script>
+<script>
+  // Activate this page and trigger hero animation
+  (function () {
+    var wrapper = document.getElementById('completed-homes-page');
+    if (!wrapper) return;
+    wrapper.style.display = 'block';
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        wrapper.classList.add('page-active');
+        setTimeout(function () {
+          var hero = document.getElementById('chHero');
+          if (hero) hero.classList.add('loaded');
+        }, 100);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

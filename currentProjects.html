@@ -28,8 +28,10 @@
     </div>
   </section>
 
-  <!-- Projects List — rendered dynamically from PROJECTS data -->
-  <main id="cpProjectsList" aria-label="Current development projects"></main>
+  <!-- Projects Grid — rendered dynamically from PROJECTS data -->
+  <div class="hfs-section">
+    <div class="hfs-grid" id="cpProjectsList"></div>
+  </div>
 
   <!-- Footer -->
   <div id="kp-footer"></div>
@@ -39,27 +41,42 @@
 <script src="js/components.js"></script>
 <script src="js/projects-data.js"></script>
 <script>
-  // Render project cards from PROJECTS data
+  // Render current projects as a 3-column card grid
   (function renderProjects() {
     var container = document.getElementById('cpProjectsList');
     if (!container || typeof PROJECTS === 'undefined') return;
-    container.innerHTML = Object.entries(PROJECTS).map(function (entry, i) {
+
+    var ARR_ICON = '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+
+    var entries = Object.entries(PROJECTS);
+
+    container.innerHTML = entries.map(function (entry, i) {
       var key = entry[0], p = entry[1];
-      var reverse = i % 2 !== 0 ? ' reverse' : '';
       var imgSrc = (p.images && p.images[0]) ? p.images[0] : p.cardImage;
-      return '<div class="project-item' + reverse + ' cp-reveal">' +
-        '<div class="project-img-wrap">' +
+      var delay = (i % 3) * 0.1;
+      return '<div class="hfs-card" style="transition-delay:' + delay + 's">' +
+        '<div class="hfs-card-img-wrap">' +
           '<img src="' + imgSrc + '" alt="' + p.name + '" loading="lazy" />' +
+          '<span class="project-status hfs-card-badge ' + p.statusClass + '">' + p.statusLabel + '</span>' +
         '</div>' +
-        '<div class="project-text-wrap">' +
-          '<p class="project-category">Current Projects</p>' +
-          '<h2 class="project-name">' + p.name + '</h2>' +
-          '<span class="project-status ' + p.statusClass + '">' + p.statusLabel + '</span>' +
-          '<p class="project-desc">' + p.cardDesc + '</p>' +
-          '<a href="project?id=' + key + '" class="project-link">Learn More</a>' +
+        '<div class="hfs-card-body">' +
+          '<p class="hfs-card-category">Current Projects</p>' +
+          '<h2 class="hfs-card-name">' + p.name + '</h2>' +
+          '<p class="hfs-card-location">' + p.location + '</p>' +
+          '<p class="hfs-card-desc">' + p.cardDesc + '</p>' +
+          '<a href="project?id=' + key + '" class="hfs-card-btn">Learn More ' + ARR_ICON + '</a>' +
         '</div>' +
       '</div>';
     }).join('\n');
+
+    // Scroll reveal
+    var cards = Array.from(container.querySelectorAll('.hfs-card'));
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    cards.forEach(function (el) { io.observe(el); });
   })();
 </script>
 <script src="js/script.js"></script>

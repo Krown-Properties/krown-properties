@@ -2,9 +2,9 @@ name: Deploy to Production
 
 on:
   # Auto-deploy when code is pushed to main
-  push:
-    branches:
-      - main
+  //push:
+    //branches:
+    //  - main
 
   # Manual deploy from GitHub UI
   workflow_dispatch:
@@ -16,6 +16,7 @@ on:
 
 jobs:
   deploy:
+    if: false
     runs-on: ubuntu-latest
 
     steps:
@@ -35,8 +36,8 @@ jobs:
           enable-commit-comment: false
           overwrites-pull-request-comment: false
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_PROD }}
+        //  NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        //  NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_PROD }}
         timeout-minutes: 5
 
       - name: Deployment Success

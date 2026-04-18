@@ -28,7 +28,7 @@
     </div>
   </section>
 
-  <section class="rp-intro" aria-label="Who we are">
+  <section class="rp-intro" id="rpWhoWeAre" aria-label="Who we are">
     <div class="rp-intro-inner">
       <span class="rp-intro-label">Who We Are</span>
       <h2 class="rp-intro-title">End-to-End Development Expertise<br>by Reliance Projects</h2>
@@ -36,7 +36,7 @@
     </div>
   </section>
 
-  <section class="rp-services" aria-label="Reliance Projects services">
+  <section class="rp-services" id="rpServices" aria-label="Reliance Projects services">
     <div class="rp-services-header">
       <span class="rp-services-label">What We Do</span>
       <h2 class="rp-services-title">Our Services</h2>
@@ -89,12 +89,19 @@
     </div>
   </section>
 
-  <section class="rp-cta" aria-label="Get in touch">
+  <section class="rp-cta" id="rpContact" aria-label="Get in touch">
     <span class="rp-cta-label">Get In Touch</span>
     <h2 class="rp-cta-title">Ready to Start<br>Your Next Project?</h2>
     <p class="rp-cta-body">Contact the Reliance Projects team to discuss your development, construction, or project management needs.</p>
     <a href="mailto:relianceprojects@krown.co.nz" class="btn">relianceprojects@krown.co.nz</a>
   </section>
+
+  <!-- Sticky side nav -->
+  <nav class="rp-sidenav" id="rpSidenav" aria-label="Page sections">
+    <a class="rp-sidenav-link" href="#rpWhoWeAre" data-section="rpWhoWeAre">Who We Are</a>
+    <a class="rp-sidenav-link" href="#rpServices" data-section="rpServices">Our Services</a>
+    <a class="rp-sidenav-link" href="#rpContact" data-section="rpContact">Get In Touch</a>
+  </nav>
 
   <!-- Footer -->
   <div id="kp-footer"></div>
@@ -103,6 +110,40 @@
 
 <script src="js/components.js"></script>
 <script src="js/script.js"></script>
+<script>
+  // Scroll-spy for side nav
+  (function() {
+    var sections = ['rpWhoWeAre', 'rpServices', 'rpContact'];
+    var links = document.querySelectorAll('.rp-sidenav-link');
+    var nav = document.getElementById('rpSidenav');
+
+    function onScroll() {
+      var scrollY = window.scrollY + window.innerHeight * 0.35;
+      var active = sections[0];
+      sections.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) active = id;
+      });
+      links.forEach(function(l) {
+        l.classList.toggle('active', l.dataset.section === active);
+      });
+      // Show nav after hero
+      var hero = document.getElementById('rpHero');
+      if (hero) nav.classList.toggle('visible', window.scrollY > hero.offsetHeight * 0.6);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    links.forEach(function(l) {
+      l.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = document.getElementById(l.dataset.section);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  })();
+</script>
 <script>
   // Activate this page and trigger hero animation
   (function() {

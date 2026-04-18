@@ -17,6 +17,7 @@ permissions:
 
 jobs:
   promote:
+    if: false
     runs-on: ubuntu-latest
 
     steps:

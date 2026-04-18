@@ -559,7 +559,7 @@
   /* ──── FOOTER ──── */
   footer {
     background: var(--main);
-    padding: 80px 48px 48px;
+    padding: 24px 48px;
     border-top: 1px solid rgba(203,161,53,.3);
   }
   @media (max-width: 1024px) { footer { padding: 60px 40px 36px; } }
@@ -2319,6 +2319,19 @@
   .hfs-filter { background: none; border: none; border-bottom: 2px solid transparent; padding: 22px 30px; font-family: 'Montserrat', sans-serif; font-size: .56rem; letter-spacing: .35em; font-weight: 400; text-transform: uppercase; color: rgba(203,161,53,.38); cursor: pointer; transition: color .25s, border-color .25s; white-space: nowrap; }
   .hfs-filter:hover { color: rgba(203,161,53,.8); }
   .hfs-filter.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* Coming Soon */
+  .cs-section { background: var(--main); padding: 120px 80px 160px; display: flex; justify-content: center; align-items: center; }
+  .cs-inner { max-width: 720px; text-align: center; }
+  .cs-label { font-family: 'Montserrat', sans-serif; font-size: .54rem; letter-spacing: .44em; text-transform: uppercase; color: var(--accent); opacity: .5; margin-bottom: 32px; }
+  .cs-title { font-family: 'Cormorant Garamond', serif; white-space: nowrap; font-size: clamp(1.5rem, 3.5vw, 3.25rem); font-weight: 300; color: var(--accent); line-height: 1.05; letter-spacing: .06em; margin-bottom: 36px; }
+  .cs-body { font-size: .88rem; line-height: 1.9; color: rgba(255,255,255,.4); max-width: 480px; margin: 0 auto 48px; }
+  .cs-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 48px; }
+  .cs-contact { display: flex; align-items: center; gap: 12px; }
+  .cs-contact a { font-family: 'Montserrat', sans-serif; font-size: .6rem; letter-spacing: .12em; color: rgba(203,161,53,.5); text-decoration: none; transition: color .25s; }
+  .cs-contact a:hover { color: var(--accent); }
+  .cs-sep { color: rgba(203,161,53,.25); }
+  @media (max-width: 640px) { .cs-section { padding: 80px 24px 100px; } .cs-actions { flex-direction: column; } }
 
   /* Grid section */
   .hfs-section { background: var(--main); padding: 72px 80px 140px; }

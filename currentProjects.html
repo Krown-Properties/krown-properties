@@ -30,19 +30,7 @@
 
   <!-- Projects Grid — rendered dynamically from PROJECTS data -->
   <div class="hfs-section">
-    <div class="cp-layout">
-      <aside class="cp-sidebar">
-        <span class="cp-sidebar-label">Filter</span>
-        <nav class="cp-sidebar-nav" id="cpSidebarNav">
-          <button class="cp-sidebar-btn active" data-filter="all">All <span class="cp-sidebar-count"></span></button>
-          <div class="cp-sidebar-divider"></div>
-          <button class="cp-sidebar-btn" data-filter="Current Projects">Current <span class="cp-sidebar-count"></span></button>
-          <button class="cp-sidebar-btn" data-filter="Homes for Sale">For Sale <span class="cp-sidebar-count"></span></button>
-          <button class="cp-sidebar-btn" data-filter="Completed Homes">Completed <span class="cp-sidebar-count"></span></button>
-        </nav>
-      </aside>
-      <div class="hfs-grid" id="cpProjectsList"></div>
-    </div>
+    <div class="hfs-grid" id="cpProjectsList"></div>
   </div>
 
   <!-- Footer -->
@@ -81,31 +69,6 @@
         '</div>' +
       '</div>';
     }).join('\n');
-
-    // Update sidebar counts
-    var nav = document.getElementById('cpSidebarNav');
-    if (nav) {
-      var allCards = Array.from(container.querySelectorAll('.hfs-card'));
-      nav.querySelectorAll('.cp-sidebar-btn').forEach(function (btn) {
-        var filter = btn.dataset.filter;
-        var count = filter === 'all' ? allCards.length : allCards.filter(function (c) { return c.dataset.category === filter; }).length;
-        var span = btn.querySelector('.cp-sidebar-count');
-        if (span) span.textContent = count;
-      });
-
-      // Filter on click
-      nav.addEventListener('click', function (e) {
-        var btn = e.target.closest('.cp-sidebar-btn');
-        if (!btn) return;
-        nav.querySelectorAll('.cp-sidebar-btn').forEach(function (b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        var filter = btn.dataset.filter;
-        allCards.forEach(function (card) {
-          var match = filter === 'all' || card.dataset.category === filter;
-          card.classList.toggle('hidden', !match);
-        });
-      });
-    }
 
     // Scroll reveal
     var cards = Array.from(container.querySelectorAll('.hfs-card'));

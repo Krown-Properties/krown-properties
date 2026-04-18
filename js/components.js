@@ -33,6 +33,8 @@
          navLink('index.html',                'Home') +
          navLink('about.html',                'About Us') +
          navLink('currentProjects.html',      'Projects') +
+         navLink('homes-for-sale.html',       'Homes for Sale') +
+         navLink('completedHomes.html',       'Completed Homes') +
          navLink('property-management.html',  'Property Management') +
          navLink('reliance.html',             'Reliance Projects') +
          navLink('process.html',              'Process') +
@@ -62,6 +64,9 @@
     '    <div class="footer-social">' +
     '      <a href="https://www.instagram.com/krownpropertiesnz?igsh=ZmFqeGkxem9vd2di" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener">' +
     '        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" fill="rgba(255,255,255,.6)"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="rgba(255,255,255,.6)" stroke-width="2"/></svg>' +
+    '      </a>' +
+    '      <a href="https://www.linkedin.com/company/krown-properties/" class="social-btn" aria-label="LinkedIn" target="_blank" rel="noopener">' +
+    '        <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2"/><circle cx="8" cy="8" r="1.2" fill="rgba(255,255,255,.6)"/><path d="M8 11v6" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round"/><path d="M12 17V12C12 9 18 9 18 12v5" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
     '      </a>' +
     '    </div>' +
     '    <p class="footer-bottom">Copyright 2025 &copy; All Rights Reserved Krown Properties</p>' +

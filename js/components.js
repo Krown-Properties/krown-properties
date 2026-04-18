@@ -31,35 +31,35 @@
     '  </div>' +
     '  <ul class="nav-list">' +
          navLink('index.html',                'Home') +
-         navLink('about.html',                'About Us') +
-         navLink('currentProjects.html',      'Projects') +
-         navLink('homes-for-sale.html',       'Homes for Sale') +
-         navLink('completedHomes.html',       'Completed Homes') +
-         navLink('property-management.html',  'Property Management') +
-         navLink('reliance.html',             'Reliance Projects') +
-         navLink('process.html',              'Process') +
+         // navLink('about.html',                'About Us') +
+         // navLink('currentProjects.html',      'Projects') +
+         // navLink('homes-for-sale.html',       'Homes for Sale') +
+         // navLink('completedHomes.html',       'Completed Homes') +
+         // navLink('property-management.html',  'Property Management') +
+         // navLink('reliance.html',             'Reliance Projects') +
+         // navLink('process.html',              'Process') +
     '  </ul>' +
     '</nav>' +
     '<!-- HEADER -->' +
     '<header class="header" id="header">' +
     '  <a href="' + ROOT + '" class="logo-text">Krown <span>Properties</span></a>' +
-    '  <button class="hamburger" id="menuBtn" aria-label="Open menu">' +
-    '    <span></span><span></span><span></span>' +
-    '  </button>' +
+    // hamburger hidden during coming soon
+    // '  <button class="hamburger" id="menuBtn" aria-label="Open menu">' +
+    // '    <span></span><span></span><span></span>' +
+    // '  </button>' +
     '</header>';
 
   var FOOTER_HTML = '' +
     '<footer>' +
     '  <div class="footer-inner">' +
-    '    <a href="' + ROOT + '" class="footer-logo">Krown <span>Properties</span></a>' +
+    // '    <a href="' + ROOT + '" class="footer-logo">Krown <span>Properties</span></a>' +
     '    <div class="footer-contact">' +
-    '      <a href="tel:+64276654333">+64 276654333</a>' +
-    '      <span class="footer-sep">|</span>' +
-    '      <a href="mailto:krownproperties@krown.co.nz">krownproperties@krown.co.nz</a>' +
-    '      <span class="footer-sep">|</span>' +
-    '      <a href="mailto:relianceprojects@krown.co.nz">relianceprojects@krown.co.nz</a>' +
-    '      <span class="footer-sep">|</span>' +
-    '      <span>22 Grand Ridge Avenue, Flat Bush Auckland 2019</span>' +
+    // '      <a href="tel:+64276654333">+64 276654333</a>' +
+    // '      <span class="footer-sep">|</span>' +
+    // '      <a href="mailto:krownproperties@krown.co.nz">krownproperties@krown.co.nz</a>' +
+    // '      <span class="footer-sep">|</span>' +
+    // '      <a href="mailto:relianceprojects@krown.co.nz">relianceprojects@krown.co.nz</a>' +
+    // '      <span class="footer-sep">|</span>' +
     '    </div>' +
     '    <div class="footer-social">' +
     '      <a href="https://www.instagram.com/krownpropertiesnz?igsh=ZmFqeGkxem9vd2di" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener">' +

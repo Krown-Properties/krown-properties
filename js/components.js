@@ -59,7 +59,6 @@
     '      <span class="footer-sep">|</span>' +
     '      <a href="mailto:relianceprojects@krown.co.nz">relianceprojects@krown.co.nz</a>' +
     '      <span class="footer-sep">|</span>' +
-    '      <span>22 Grand Ridge Avenue, Flat Bush Auckland 2019</span>' +
     '    </div>' +
     '    <div class="footer-social">' +
     '      <a href="https://www.instagram.com/krownpropertiesnz?igsh=ZmFqeGkxem9vd2di" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener">' +
